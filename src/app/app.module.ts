@@ -1,3 +1,5 @@
+import { DobavljacService } from 'src/app/services/dobavljac.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,6 +25,12 @@ import { AuthorComponent } from './core/author/author.component';
 import { AboutComponent } from './core/about/about.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ArtiklService } from './services/artikl.service';
+import { ArtiklDialogComponent } from './dialog/artikl-dialog/artikl-dialog.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { DobavljacDialogComponent } from './dialog/dobavljac-dialog/dobavljac-dialog.component';
 
 const Routes = [{path: 'artikl', component: ArtiklComponent},
                 {path: 'dobavljac', component: DobavljacComponent},
@@ -44,7 +52,9 @@ const Routes = [{path: 'artikl', component: ArtiklComponent},
     StavkaPorudzbineComponent,
     HomeComponent,
     AuthorComponent,
-    AboutComponent
+    AboutComponent,
+    ArtiklDialogComponent,
+    DobavljacDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -58,9 +68,15 @@ const Routes = [{path: 'artikl', component: ArtiklComponent},
     MatTableModule,
     MatToolbarModule,
     HttpClientModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
     RouterModule.forRoot(Routes)
   ],
-  providers: [ArtiklService],
+  providers: [ArtiklService, DobavljacService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
