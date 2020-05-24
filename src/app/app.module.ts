@@ -1,3 +1,4 @@
+import { PorudzbinaService } from './services/porudzbina.service';
 import { DobavljacService } from 'src/app/services/dobavljac.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
@@ -10,6 +11,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -29,8 +34,14 @@ import { ArtiklDialogComponent } from './dialog/artikl-dialog/artikl-dialog.comp
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { DobavljacDialogComponent } from './dialog/dobavljac-dialog/dobavljac-dialog.component';
+import { PorudzbinaDialogComponent } from './dialog/porudzbina-dialog/porudzbina-dialog.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { StavkaPorudzbineDialogComponent } from './dialog/stavka-porudzbine-dialog/stavka-porudzbine-dialog.component';
+import { StavkaPorudzbineService } from './services/stavka-porudzbine.service';
 
 const Routes = [{path: 'artikl', component: ArtiklComponent},
                 {path: 'dobavljac', component: DobavljacComponent},
@@ -54,7 +65,9 @@ const Routes = [{path: 'artikl', component: ArtiklComponent},
     AuthorComponent,
     AboutComponent,
     ArtiklDialogComponent,
-    DobavljacDialogComponent
+    DobavljacDialogComponent,
+    PorudzbinaDialogComponent,
+    StavkaPorudzbineDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -73,9 +86,20 @@ const Routes = [{path: 'artikl', component: ArtiklComponent},
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatSortModule,
     RouterModule.forRoot(Routes)
   ],
-  providers: [ArtiklService, DobavljacService],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+              ArtiklService,
+              DobavljacService,
+              PorudzbinaService,
+              StavkaPorudzbineService],
 
   bootstrap: [AppComponent]
 })

@@ -1,1 +1,70 @@
-<p>porudzbina works!</p>
+<mat-toolbar color="primary">
+  <span class="title-center">Porudžbina</span>
+ </mat-toolbar>
+
+ <mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+ <div class="container mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" class="mat-cell" matSort>
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+      <mat-cell *matCellDef="let row" >{{row.id}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="datum">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Datum</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.datum | date:'dd-MM-yyyy'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isporuceno">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Isporučeno</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.isporuceno | date:'dd-MM-yyyy'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="iznos">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Iznos</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.iznos}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="placeno">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Plaćeno</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.placeno?'Da':'Ne'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dobavljac">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Dobavljač</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.dobavljac.naziv}}</mat-cell>
+    </ng-container>
+
+    <!-- actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="openDialog(1, null, currentDate, currentDate, null, null, null)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="primary" (click)="openDialog(2, row.id, row.datum, row.isporuceno, row.iznos, row.placeno, row.dobavljac)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="openDialog(3, row.id, row.datum, row.isporuceno, row.iznos, row.placeno, row.dobavljac)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row style="cursor: pointer" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"
+   [ngClass]="{'selectRow': selektovanaPorudzbina != null && selektovanaPorudzbina.id == row.id}"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+ </div>
+ <div class="container mat-elevation z8">
+  <app-stavka-porudzbine *ngIf="selektovanaPorudzbina" [selektovanaPorudzbina]="selektovanaPorudzbina"></app-stavka-porudzbine>
+</div>

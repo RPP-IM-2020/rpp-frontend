@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Dobavljac } from '../models/dobavljac.model';
 import { DobavljacService } from '../services/dobavljac.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { DobavljacDialogComponent } from '../dialog/dobavljac-dialog/dobavljac-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-dobavljac',
@@ -14,8 +17,14 @@ import { DobavljacDialogComponent } from '../dialog/dobavljac-dialog/dobavljac-d
 export class DobavljacComponent implements OnInit {
 
   displayedColumns = ['id', 'naziv', 'kontakt', 'adresa', 'actions'];
-  dataSource: Observable<Dobavljac[]>;
+  //dataSource: Observable<Dobavljac[]>;
+  dataSource: MatTableDataSource<Dobavljac>;
   database: DobavljacService | null;
+
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
+  @ViewChild(MatSort)
+  sort: MatSort;
 
   constructor(public httpClient: HttpClient,
               public dobavljacService: DobavljacService,
@@ -35,8 +44,25 @@ export class DobavljacComponent implements OnInit {
     this.loadData();
   }
 
-  public loadData(){
-    this.dataSource = this.dobavljacService.getAllDobavljac();
+  public loadData() {
+    this.dobavljacService.getAllDobavljac().subscribe(data =>{
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sortingDataAccessor = (data, property) => {
+        switch (property) {
+          case 'id': return data[property];
+          default: return data[property].toLocaleLowerCase();
+        }
+      };
+
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 
 }
