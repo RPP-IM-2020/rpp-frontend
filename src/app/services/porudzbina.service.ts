@@ -6,7 +6,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable()
 export class PorudzbinaService {
   porudzbine: Porudzbina[];
-  private readonly API_URL = 'http://localhost:8083/porudzbina/';
+  /* Development */
+  /* private readonly API_URL = 'http://localhost:8083/porudzbina/'; */
+  /* Production */
+  private readonly API_URL = 'https://rpp-backend.herokuapp.com/porudzbina/';
   dataChange: BehaviorSubject<Porudzbina[]> = new BehaviorSubject<Porudzbina[]>([]);
 
   constructor(private httpClient: HttpClient){

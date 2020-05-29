@@ -6,8 +6,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable()
 export class StavkaPorudzbineService {
   porudzbine: StavkaPorudzbine[];
-  private readonly API_URL = 'http://localhost:8083/stavkaPorudzbine/';
-  private readonly API_URL_P = 'http://localhost:8083/stavkaZaPorudzbinu/';
+  /* Development */
+  /* private readonly API_URL = 'http://localhost:8083/stavkaPorudzbine/'; */
+  /* private readonly API_URL_P = 'http://localhost:8083/stavkaZaPorudzbinu/'; */
+  /* Production */
+  private readonly API_URL = 'https://rpp-backend.herokuapp.com/stavkaPorudzbine/';
+  private readonly API_URL_P = 'https://rpp-backend.herokuapp.com/stavkaZaPorudzbinu/';
 
   dataChange: BehaviorSubject<StavkaPorudzbine[]> = new BehaviorSubject<StavkaPorudzbine[]>([]);
 

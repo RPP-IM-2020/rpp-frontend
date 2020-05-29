@@ -5,8 +5,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class ArtiklService {
-
-  private readonly API_URL = 'http://localhost:8083/artikl/';
+  /* Development */
+  /* private readonly API_URL = 'http://localhost:8083/artikl/'; */
+  /* Production */
+  private readonly API_URL = 'https://rpp-backend.herokuapp.com/artikl/';
 
   dataChange: BehaviorSubject<Artikl[]> = new BehaviorSubject<Artikl[]>([]);
 
